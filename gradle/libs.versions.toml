@@ -1,11 +1,17 @@
 metadata.format.version = "1.1"
 
 [versions]
-velocity-api = "3.5.0-SNAPSHOT"
+velocity = "3.5.0-SNAPSHOT"
+viaversion = "5.9.1"
+paho-mqtt = "1.2.5"
+
+# build
 blossom = "2.2.0"
 
 [libraries]
-velocity-api = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity-api" }
+velocity-api = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
+viaversion-api = { group = "com.viaversion", name = "viaversion-api", version.ref = "viaversion" }
+paho-mqtt = { group = "org.eclipse.paho", name = "org.eclipse.paho.client.mqttv3", version.ref = "paho-mqtt" }
 
 [plugins]
 blossom = { id = "net.kyori.blossom", version.ref = "blossom" }
