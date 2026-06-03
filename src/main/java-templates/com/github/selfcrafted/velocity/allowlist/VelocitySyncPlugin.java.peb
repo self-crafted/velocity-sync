@@ -59,7 +59,7 @@ import java.util.concurrent.ConcurrentHashMap;
         @Dependency(id = "viaversion", optional = true)
     }
 )
-public class MQTTSyncPlugin {
+public class VelocitySyncPlugin {
 
     // ── Topic layout ────────────────────────────────────────────────────────
     // mqttsync/chat            → { proxyId, player, uuid, message, server }
@@ -100,7 +100,7 @@ public class MQTTSyncPlugin {
     private final Set<UUID> localPlayers = ConcurrentHashMap.newKeySet();
 
     @Inject
-    public MQTTSyncPlugin(ProxyServer server, Logger logger,
+    public VelocitySyncPlugin(ProxyServer server, Logger logger,
                           @DataDirectory Path dataDirectory) {
         this.server        = server;
         this.logger        = logger;
