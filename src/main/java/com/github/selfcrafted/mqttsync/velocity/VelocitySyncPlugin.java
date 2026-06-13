@@ -25,7 +25,7 @@ import java.nio.file.Path;
  * instances using an MQTT broker as the message bus.
  */
 @Plugin(
-        id = "selfcrafted-velocity-mqttsync",
+        id = Versions.ID,
         name = Versions.NAME,
         version = Versions.VERSION,
         description = "Sync chat, joins, leaves and server hops across proxy instances via MQTT",

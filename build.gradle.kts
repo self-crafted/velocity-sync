@@ -4,7 +4,7 @@ plugins {
     java
 }
 
-var displayName = "velocity-sync"
+var displayName = "MQTT-sync"
 
 group = "com.github.selfcrafted"
 version = "0.1.0-SNAPSHOT"
@@ -31,7 +31,8 @@ sourceSets {
     main {
         blossom {
             javaSources {
-                property("name", project.name)
+                property("id", project.name)
+                property("name", displayName)
                 property("version", version.toString())
             }
         }
