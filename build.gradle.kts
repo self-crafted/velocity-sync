@@ -19,10 +19,9 @@ repositories {
 }
 
 dependencies {
-    compileOnly(libs.viaversion.api)
-    compileOnly(libs.velocity.api)
+    compileOnly(libs.bundles.velocity)
     annotationProcessor(libs.velocity.api)
-    implementation(libs.paho.mqtt)
+    implementation(libs.bundles.common)
 }
 
 sourceSets {

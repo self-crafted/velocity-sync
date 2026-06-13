@@ -3,7 +3,9 @@ metadata.format.version = "1.1"
 [versions]
 velocity = "3.5.0-SNAPSHOT"
 viaversion = "5.9.1"
+netty = "4.0.20.Final"
 paho-mqtt = "1.2.5"
+jackson = "2.21.4"
 
 # build
 blossom = "2.2.0"
@@ -11,7 +13,15 @@ blossom = "2.2.0"
 [libraries]
 velocity-api = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
 viaversion-api = { group = "com.viaversion", name = "viaversion-api", version.ref = "viaversion" }
+viaversion-velocity = { group = "com.viaversion", name = "viaversion-velocity", version.ref = "viaversion" }
+netty = { group = "io.netty", name = "netty-all", version.ref = "netty" }
 paho-mqtt = { group = "org.eclipse.paho", name = "org.eclipse.paho.client.mqttv3", version.ref = "paho-mqtt" }
+jackson-yaml = { group = "com.fasterxml.jackson.dataformat", name = "jackson-dataformat-yaml", version.ref = "jackson" }
+
+[bundles]
+
+common = ["paho-mqtt", "jackson-yaml"]
+velocity = ["velocity-api", "viaversion-api", "viaversion-velocity", "netty"]
 
 [plugins]
 blossom = { id = "net.kyori.blossom", version.ref = "blossom" }

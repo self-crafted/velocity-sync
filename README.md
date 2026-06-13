@@ -15,6 +15,7 @@ Events and information available to one proxy get synced to all others using MQT
 
 > [!CAUTION]
 > I used AI (Claude) to generate the starting point of the code.
+> Even though I touched most of the code after that, there is still residue.
 
 ## Table of Contents
 
