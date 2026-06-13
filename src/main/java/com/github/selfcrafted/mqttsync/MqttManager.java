@@ -27,6 +27,15 @@ public class MqttManager {
         this.clientId = "mqttsync-" + config.proxy_id;
         try {
             this.client = new MqttClient(config.broker_addr, clientId, new MemoryPersistence());
+            client.setCallback(new MqttCallback() {
+                @Override public void connectionLost(Throwable cause) {
+                    logger.warn("[MQTTSync] Connection lost: {}", cause.getMessage());
+                }
+                @Override public void messageArrived(String topic, MqttMessage message) {
+                    handleIncoming(topic, new String(message.getPayload(), StandardCharsets.UTF_8));
+                }
+                @Override public void deliveryComplete(IMqttDeliveryToken token) {}
+            });
         } catch (MqttException e) {
             throw new RuntimeException(e);
         }
@@ -45,16 +54,6 @@ public class MqttManager {
                 opts.setPassword(config.broker_password.toCharArray());
             }
 
-            client.setCallback(new MqttCallback() {
-                @Override public void connectionLost(Throwable cause) {
-                    logger.warn("[MQTTSync] Connection lost: {}", cause.getMessage());
-                }
-                @Override public void messageArrived(String topic, MqttMessage message) {
-                    handleIncoming(topic, new String(message.getPayload(), StandardCharsets.UTF_8));
-                }
-                @Override public void deliveryComplete(IMqttDeliveryToken token) {}
-            });
-
             client.connect(opts);
             client.subscribe(TOPIC_ROOT+"/#", config.broker_qos);
             logger.info("[MQTTSync] Connected to MQTT broker {} as '{}'", config.broker_addr, clientId);
@@ -71,7 +70,10 @@ public class MqttManager {
     }
 
     public void publish(SyncMessage message) {
-        if (!client.isConnected()) logger.warn("MQTT manager not ready");
+        if (!client.isConnected()) {
+            logger.warn("MQTT client not connected. Try to connect ...");
+            connect();
+        }
         String topic = TOPIC_ROOT + "/" + message.getType();
 
         try {
