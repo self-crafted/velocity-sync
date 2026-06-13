@@ -1,6 +1,7 @@
 package com.github.selfcrafted.mqttsync;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
@@ -78,12 +79,12 @@ public class ConfigManager {
         }
 
         @JsonCreator
-        public Config(String proxy_id,
-                      boolean format_chat,
-                      String broker_addr,
-                      String broker_username,
-                      String broker_password,
-                      byte broker_qos) {
+        public Config(@JsonProperty("proxy_id") String proxy_id,
+                      @JsonProperty("format_chat") boolean format_chat,
+                      @JsonProperty("broker_addr") String broker_addr,
+                      @JsonProperty("broker_username") String broker_username,
+                      @JsonProperty("broker_password") String broker_password,
+                      @JsonProperty("broker_qos) ") byte broker_qos) {
             this.proxy_id = proxy_id;
             this.format_chat = format_chat;
             this.broker_addr = broker_addr;
