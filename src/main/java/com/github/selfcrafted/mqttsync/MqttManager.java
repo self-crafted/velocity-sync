@@ -29,7 +29,7 @@ public class MqttManager {
             this.client = new MqttClient(config.broker_addr, clientId, new MemoryPersistence());
             client.setCallback(new MqttCallback() {
                 @Override public void connectionLost(Throwable cause) {
-                    logger.warn("[MQTTSync] Connection lost: {}", cause.getMessage());
+                    logger.warn("Connection lost: {}", cause.getMessage());
                 }
                 @Override public void messageArrived(String topic, MqttMessage message) {
                     handleIncoming(topic, new String(message.getPayload(), StandardCharsets.UTF_8));
@@ -56,10 +56,10 @@ public class MqttManager {
 
             client.connect(opts);
             client.subscribe(TOPIC_ROOT+"/#", config.broker_qos);
-            logger.info("[MQTTSync] Connected to MQTT broker {} as '{}'", config.broker_addr, clientId);
+            logger.info("Connected to MQTT broker {} as '{}'", config.broker_addr, clientId);
 
         } catch (MqttException e) {
-            logger.error("[MQTTSync] Failed to connect to MQTT: {}", e.getMessage());
+            logger.error("Failed to connect to MQTT: {}", e.getMessage());
         }
     }
 
@@ -82,9 +82,9 @@ public class MqttManager {
             msg.setQos(1);
             client.publish(topic, msg);
         } catch (MqttException e) {
-            logger.warn("[MQTTSync] Publish failed on {}: {}", topic, e.getMessage());
+            logger.warn("Publish failed on {}: {}", topic, e.getMessage());
         } catch (JsonProcessingException e) {
-            logger.warn("[MQTTSync] Could not serialize message: {}", e.getMessage());
+            logger.warn("Could not serialize message: {}", e.getMessage());
         }
     }
 
@@ -108,7 +108,7 @@ public class MqttManager {
             }
 
         } catch (Exception e) {
-            logger.warn("[MQTTSync] Failed to handle message {}: {}", json, e.getMessage());
+            logger.warn("Failed to handle message {}: {}", json, e.getMessage());
         }
     }
 }
