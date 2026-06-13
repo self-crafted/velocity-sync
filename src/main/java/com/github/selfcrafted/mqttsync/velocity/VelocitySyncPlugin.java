@@ -66,16 +66,16 @@ public class VelocitySyncPlugin {
 
     @Subscribe
     public void onPlayerChat(PlayerChatEvent event) {
-        mqttManager.publish(msgFactory.createFromEvent(event));
+        mqttManager.asyncPublish(msgFactory.createFromEvent(event));
     }
 
     @Subscribe
     public void onDisconnect(DisconnectEvent event) {
-        mqttManager.publish(msgFactory.createFromEvent(event));
+        mqttManager.asyncPublish(msgFactory.createFromEvent(event));
     }
 
     @Subscribe
     public void onServerConnected(ServerConnectedEvent event) {
-        mqttManager.publish(msgFactory.createFromEvent(event));
+        mqttManager.asyncPublish(msgFactory.createFromEvent(event));
     }
 }

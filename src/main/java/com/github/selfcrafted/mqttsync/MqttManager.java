@@ -7,6 +7,8 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 
 import java.nio.charset.StandardCharsets;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MqttManager {
     private final Logger logger;
@@ -15,6 +17,7 @@ public class MqttManager {
     private final String clientId;
     private final ConfigManager configManager;
     private final CallbackHandler callbackHandler;
+    private final ExecutorService threadpool;
 
     private static final String TOPIC_ROOT     = "mqttsync";
 
@@ -23,6 +26,7 @@ public class MqttManager {
         this.logger = logger;
         this.serializer = serializer;
         this.callbackHandler = handler;
+        this.threadpool = Executors.newCachedThreadPool();
         ConfigManager.Config config = configManager.config();
         this.clientId = "mqttsync-" + config.proxy_id;
         try {
@@ -67,6 +71,11 @@ public class MqttManager {
         if (client.isConnected()) {
             try { client.disconnect(); } catch (MqttException ignored) {}
         }
+        threadpool.shutdown();
+    }
+
+    public void asyncPublish(SyncMessage message) {
+        threadpool.submit(() -> publish(message));
     }
 
     public void publish(SyncMessage message) {
