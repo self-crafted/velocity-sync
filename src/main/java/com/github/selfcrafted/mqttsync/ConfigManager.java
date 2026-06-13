@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 
 public class ConfigManager {
@@ -34,7 +35,7 @@ public class ConfigManager {
             try {
                 String configText = Files.readString(configPath.toAbsolutePath());
                 this.config = mapper.readValue(configText, Config.class);
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException | NoSuchFileException e) {
                 this.config = new Config();
                 save();
             } catch (JsonProcessingException e) {
@@ -49,6 +50,9 @@ public class ConfigManager {
     }
 
     private void save() throws IOException {
+        if (!Files.isDirectory(configPath.getParent())) {
+            Files.createDirectories(configPath.getParent());
+        }
         try {
             Files.writeString(configPath, this.mapper.writeValueAsString(config));
         } catch (JsonProcessingException e) {

@@ -31,24 +31,30 @@ import java.nio.file.Path;
         description = "Sync chat, joins, leaves and server hops across proxy instances via MQTT",
         authors = {"offby0point5"},
         dependencies = {
-                @Dependency(id = "viaversion", optional = false)
+                @Dependency(id = "viaversion")
         }
 )
 public class VelocitySyncPlugin {
-    private final MqttManager mqttManager;
-    private final EventSyncMessageFactory msgFactory;
+    private final ProxyServer server;
+    private final Logger logger;
+    private final Path dataDirectory;
+
+    private MqttManager mqttManager;
+    private EventSyncMessageFactory msgFactory;
 
     @Inject
-    public VelocitySyncPlugin(ProxyServer server, Logger logger,
-                              @DataDirectory Path dataDirectory) {
-        ConfigManager configManager = new ConfigManager(logger, dataDirectory.resolve("mqtt-sync.yml"));
-        this.mqttManager   = new MqttManager(logger, new MessageSerializer(), configManager,
-                new VelocityCallbackHandler(logger, server, new BackendsManager(logger, server)));
-        this.msgFactory = new EventSyncMessageFactory(configManager.config().proxy_id);
+    public VelocitySyncPlugin(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+        this.server = server;
+        this.logger = logger;
+        this.dataDirectory = dataDirectory;
     }
 
     @Subscribe
     public void onProxyInit(ProxyInitializeEvent event) {
+        ConfigManager configManager = new ConfigManager(logger, dataDirectory.resolve("mqtt-sync.yml"));
+        this.mqttManager   = new MqttManager(logger, new MessageSerializer(), configManager,
+                new VelocityCallbackHandler(logger, server, new BackendsManager(logger, server)));
+        this.msgFactory = new EventSyncMessageFactory(configManager.config().proxy_id);
         mqttManager.connect();
     }
 

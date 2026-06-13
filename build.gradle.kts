@@ -1,7 +1,10 @@
 plugins {
     alias(libs.plugins.blossom)
+    alias(libs.plugins.shadowJar)
     java
 }
+
+var displayName = "velocity-sync"
 
 group = "com.github.selfcrafted"
 version = "0.1.0-SNAPSHOT"
@@ -32,5 +35,22 @@ sourceSets {
                 property("version", version.toString())
             }
         }
+    }
+}
+
+tasks {
+    shadowJar {
+        archiveBaseName.set(displayName)
+        archiveClassifier.set("")
+        archiveVersion.set(project.version.toString())
+        mergeServiceFiles()
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+    build {
+        dependsOn(shadowJar)
     }
 }

@@ -9,6 +9,7 @@ jackson = "2.21.4"
 
 # build
 blossom = "2.2.0"
+shadowJar = "9.4.2"
 
 [libraries]
 velocity-api = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
@@ -25,3 +26,4 @@ velocity = ["velocity-api", "viaversion-api", "viaversion-velocity", "netty"]
 
 [plugins]
 blossom = { id = "net.kyori.blossom", version.ref = "blossom" }
+shadowJar = { id = "com.gradleup.shadow", version.ref = "shadowJar" }
