@@ -5,7 +5,7 @@ velocity = "3.5.0-SNAPSHOT"
 viaversion = "5.11.0"
 netty = "4.2.16.Final"
 paho-mqtt = "1.2.5"
-jackson = "2.22.0"
+jackson = "2.22.1"
 
 # build
 blossom = "2.2.0"
