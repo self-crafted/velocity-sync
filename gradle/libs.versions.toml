@@ -3,7 +3,7 @@ metadata.format.version = "1.1"
 [versions]
 velocity = "3.5.0-SNAPSHOT"
 viaversion = "5.11.0"
-netty = "4.2.15.Final"
+netty = "4.2.16.Final"
 paho-mqtt = "1.2.5"
 jackson = "2.22.0"
 
