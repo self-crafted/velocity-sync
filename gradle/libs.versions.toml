@@ -9,7 +9,7 @@ jackson = "2.22.1"
 
 # build
 blossom = "2.2.0"
-shadowJar = "9.5.1"
+shadowJar = "9.6.0"
 
 [libraries]
 velocity-api = { group = "com.velocitypowered", name = "velocity-api", version.ref = "velocity" }
